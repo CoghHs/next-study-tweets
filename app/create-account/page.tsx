@@ -6,14 +6,16 @@ import SocialLogin from "@/components/social-login";
 import { useFormState } from "react-dom";
 import { createAccount } from "./actions";
 import { PASSWORD_MIN_LENGTH } from "@/lib/constants";
+import { FireIcon } from "@heroicons/react/24/solid";
 
 export default function CreateAccount() {
   const [state, dispatch] = useFormState(createAccount, null);
   return (
-    <div className="flex flex-col gap-10 py-8 px-6">
-      <div className="flex flex-col gap-2 *:font-medium">
-        <h1 className="text-2xl">안녕하세요!</h1>
-        <h2 className="text-xl">Fill in the form below to join!</h2>
+    <div className="flex justify-center  h-full flex-col min-h-screen gap-16  max-w-screen-sm m-auto">
+      <div className="flex flex-col gap-2 justify-center items-center">
+        <h2 className="text-xl">
+          <FireIcon className="size-20 text-red-400" />
+        </h2>
       </div>
       <form action={dispatch} className="flex flex-col gap-3">
         <Input
@@ -34,8 +36,8 @@ export default function CreateAccount() {
           name="password"
           type="password"
           placeholder="Password"
-          minLength={PASSWORD_MIN_LENGTH}
           required
+          minLength={PASSWORD_MIN_LENGTH}
           errors={state?.fieldErrors.password}
         />
         <Input
@@ -48,7 +50,6 @@ export default function CreateAccount() {
         />
         <Button text="Create account" />
       </form>
-      <SocialLogin />
     </div>
   );
 }
