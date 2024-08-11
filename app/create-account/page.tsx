@@ -2,7 +2,6 @@
 
 import Button from "@/components/button";
 import Input from "@/components/input";
-import SocialLogin from "@/components/social-login";
 import { useFormState } from "react-dom";
 import { createAccount } from "./actions";
 import { PASSWORD_MIN_LENGTH } from "@/lib/constants";

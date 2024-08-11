@@ -11,6 +11,8 @@ import { z } from "zod";
 import getSession from "@/lib/session";
 import { redirect } from "next/navigation";
 
+const emailDomainRegex = new RegExp(/@zod\.com$/);
+
 const checkEmailExists = async (email: string) => {
   const user = await db.user.findUnique({
     where: {
@@ -28,12 +30,14 @@ const formSchema = z.object({
     .string()
     .email()
     .toLowerCase()
+    .regex(emailDomainRegex, "only @zod.com")
     .refine(checkEmailExists, "An account with this email does not exist"),
-  password: z.string({
-    required_error: "Password is required",
-  }),
-  // .min(PASSWORD_MIN_LENGTH)
-  // .regex(PASSWORD_REGEX, PASSWORD_REGEX_ERROR),
+  password: z
+    .string({
+      required_error: "Password is required",
+    })
+    .min(PASSWORD_MIN_LENGTH)
+    .regex(PASSWORD_REGEX, PASSWORD_REGEX_ERROR),
 });
 
 export async function login(prevState: any, formData: FormData) {
