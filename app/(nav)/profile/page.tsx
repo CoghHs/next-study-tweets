@@ -1,4 +1,3 @@
-import Button from "@/components/button";
 import db from "@/lib/db";
 import getSession from "@/lib/session";
 import { FireIcon } from "@heroicons/react/24/solid";
