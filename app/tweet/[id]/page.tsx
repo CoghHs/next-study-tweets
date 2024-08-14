@@ -68,7 +68,7 @@ export default async function TweetDetail({
       <div className="p-5">
         <h1 className="text-2xl font-semibold">{tweet.tweet}</h1>
       </div>
-      <div className="fixed w-full max-w-screen-sm bottom-0 p-5 pb-10 bg-neutral-800 flex justify-center items-center">
+      <div className="fixed w-full max-w-screen-sm bottom-0 p-5 pb-10 bg-neutral-800 flex justify-center gap-10 items-center">
         {isOwner ? (
           <form action={onDelete}>
             <button className="bg-red-500 rounded-md text-white font-semibold px-5 py-2.5">
@@ -76,6 +76,12 @@ export default async function TweetDetail({
             </button>
           </form>
         ) : null}
+        <Link
+          className="px-5 py-2.5 bg-neutral-200 rounded-md font-semibold"
+          href="/"
+        >
+          Go Back
+        </Link>
       </div>
     </div>
   );
