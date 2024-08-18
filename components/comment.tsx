@@ -4,6 +4,8 @@ import { createComment } from "@/app/tweet/[id]/actions";
 import { formatToTimeAgo } from "@/lib/utils";
 import { useCallback } from "react";
 import { useFormState } from "react-dom";
+import Button from "./button";
+import Input from "./input";
 
 export interface CommentProps {
   user: {
@@ -38,18 +40,16 @@ export default function Comment({
   const [state, dispatch] = useFormState(createCommentWithId, null);
   return (
     <div className="h-content bg-neutral-100 rounded-2xl my-3 py-8 p-5">
-      <h2 className="h2 mb-3 pb-3 border-b-2 border-neutral-500">{`댓글 (${comments.length})`}</h2>
-      <form action={dispatch} className="flex">
-        <input name="comment_content" className="w-full mx-3 h-10 px-2"></input>
-        <button className="w-[150px] mr-3 h-10 rounded-md bg-slate-600 text-white active:click-animation">
-          댓글 쓰기
-        </button>
+      <h2 className="h2 mb-3 pb-3 border-b-2 border-neutral-500">{`comment (${comments.length})`}</h2>
+      <form action={dispatch} className="flex justify-between">
+        <Input name="comment_content" />
+        <Button text="Add Comment" />
       </form>
       {comments.map((comment) => (
         <div key={comment.id} className="mt-5">
-          <div className="flex items-center mb-1">
+          <div className="flex items-center">
             <span className="font-semibold mr-3">{comment.user.username}</span>
-            <span className="text-xs text-neuborder-neutral-500 mr-1">
+            <span className="text-xs">
               {formatToTimeAgo(comment.created_at.toString())}
             </span>
           </div>
