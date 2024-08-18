@@ -8,32 +8,47 @@ datasource db {
 }
 
 model User {
-  id         Int      @id @default(autoincrement())
-  username   String   @unique
+  id         Int       @id @default(autoincrement())
+  username   String    @unique
   password   String?
-  email      String?  @unique
-  bio        String?  @unique
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  Tweet      Tweet[]
-  Like       Like[]
+  email      String?   @unique
+  bio        String?   @unique
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  tweets     Tweet[]
+  likes      Like[]
+  comments   Comment[]
 }
 
 model Tweet {
-  id         Int      @id @default(autoincrement())
+  id         Int       @id @default(autoincrement())
   tweet      String
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  user       User     @relation(fields: [userId], references: [id])
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId     Int
-  Like       Like[]
+  views      Int       @default(0)
+  like       Like[]
+  comment    Comment[]
 }
 
 model Like {
-  id         Int      @id @default(autoincrement())
   created_at DateTime @default(now())
-  user       User     @relation(fields: [userId], references: [id])
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId     Int
-  tweet      Tweet    @relation(fields: [tweetId], references: [id])
+  tweet      Tweet    @relation(fields: [tweetId], references: [id], onDelete: Cascade)
+  tweetId    Int
+
+  @@id(name: "id", [userId, tweetId])
+}
+
+model Comment {
+  id         Int      @id @default(autoincrement())
+  payload    String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     Int
+  tweet      Tweet    @relation(fields: [tweetId], references: [id], onDelete: Cascade)
   tweetId    Int
 }
